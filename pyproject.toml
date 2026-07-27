@@ -1,0 +1,39 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "rgb-agent"
+version = "0.1.0"
+description = "An agent for ARC-AGI-3 that uses Read, Grep, and Bash to solve puzzles."
+readme = "README.md"
+authors = [
+    { name = "RGB-Agent authors" },
+]
+requires-python = ">=3.12"
+keywords = ["arc-agi", "agent", "puzzle-solving"]
+dependencies = [
+    "arc-agi>=0.9.1",
+    "arcengine>=0.9.3",
+    "python-dotenv>=1.0",
+    "requests>=2.31",
+]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "ruff",
+]
+
+[project.scripts]
+prolong-swarm = "prolong_agent.agent.swarm:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["prolong_agent", "prolong_agent.*"]
+exclude = ["examples*", "rllm*", "Agent_Context*"]
