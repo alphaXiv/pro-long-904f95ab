@@ -1,5 +1,5 @@
 {
-  "condition": "full-log",
+  "condition": "stateless",
   "games": ["g50t", "m0r0", "ls20"],
   "max_actions": 120,
   "model": "gpt-5.4",
@@ -7,6 +7,6 @@
   "action_cap": 20,
   "analyzer_retries": 3,
   "grid_mode": "ascii",
-  "workspace": "persistent",
+  "workspace": "stateless",
   "log_window": null
 }
