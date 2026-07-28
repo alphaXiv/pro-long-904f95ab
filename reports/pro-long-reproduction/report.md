@@ -32,7 +32,7 @@ The first four jobs revealed one wrapper error before repository setup. The froz
 
 ![Kubernetes execution timeline](images/kubernetes_timeline.svg)
 
-Kubernetes ran on a cluster of NVIDIA RTX PRO 6000 Blackwell GPUs. Because ARC interaction and model inference are remote APIs, the jobs were CPU-only: peak concurrent GPU allocation was **0**, peak concurrent jobs was four, and the actual wall time from first submission to final completion was **222 seconds (0.0617 hours)**.
+Kubernetes ran on a cluster of NVIDIA RTX PRO 6000 Blackwell GPUs. Because ARC interaction and model inference are remote APIs, the jobs were CPU-only: peak concurrent GPU allocation was **0**, peak concurrent jobs was four, and the queue-verified wall time was **223.362 seconds (0.062045 hours)**. The publication schema rejects zero, so `autoresearch.json` records its minimum valid `gpuCount` of 1; the manifests and terminal logs remain the source of truth for the measured allocation.
 
 ## What the released artifacts establish
 

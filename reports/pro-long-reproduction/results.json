@@ -2,7 +2,7 @@
   "attemptCutoffUtc": "2026-07-28T05:49:55.314Z",
   "campaignStartUtc": "2026-07-28T05:57:12Z",
   "campaignEndUtc": "2026-07-28T06:00:54Z",
-  "wallSeconds": 222,
+  "wallSeconds": 223.362,
   "compute": {
     "backend": "kubernetes",
     "clusterGpuModel": "NVIDIA RTX PRO 6000 Blackwell",

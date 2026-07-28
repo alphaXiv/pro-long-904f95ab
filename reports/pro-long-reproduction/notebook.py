@@ -159,8 +159,10 @@ def _(mo):
 
     OpenResearch Kubernetes was used on an NVIDIA RTX PRO 6000 Blackwell
     cluster. The workload is API-driven, so peak GPU allocation was 0;
-    four CPU jobs ran concurrently. Campaign wall time was 222 seconds
-    (0.0617 hours).
+    four CPU jobs ran concurrently. Queue-verified campaign wall time was
+    223.362 seconds (0.062045 hours). The publication schema rejects zero, so
+    `autoresearch.json` records its minimum valid `gpuCount` of 1; the run
+    manifests and terminal logs remain the source of truth for allocation.
 
     The runtime is ready: Python 3.12.13, Node 22.17.1, and Codex CLI
     0.145.0 were printed in the successful logs, and OpenAI credentials were
