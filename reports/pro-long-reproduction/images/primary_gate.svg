@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="620" viewBox="0 0 1100 620" role="img" aria-labelledby="title desc">
+  <title id="title">Fresh ARC-AGI-3 episodes planned and executed by condition</title>
+  <desc id="desc">Each of four conditions planned three episodes and executed zero because ARC_API_KEY was absent.</desc>
+  <rect width="1100" height="620" fill="#fbfaf7"/>
+  <text x="70" y="62" font-family="sans-serif" font-size="30" font-weight="700" fill="#17212b">Fresh ARC-AGI-3 episodes: planned vs executed</text>
+  <text x="70" y="96" font-family="sans-serif" font-size="18" fill="#52606d">Matched 3-game suite · 120 actions/game · GPT-5.4 Codex · Kubernetes</text>
+  <line x1="105" y1="475" x2="1025" y2="475" stroke="#8a949e" stroke-width="2"/>
+  <line x1="105" y1="175" x2="105" y2="475" stroke="#8a949e" stroke-width="2"/>
+  <g font-family="sans-serif" font-size="16" fill="#52606d">
+    <text x="78" y="481">0</text><text x="78" y="381">1</text><text x="78" y="281">2</text><text x="78" y="181">3</text>
+  </g>
+  <g fill="#d9e7f5" stroke="#4078a8" stroke-width="2">
+    <rect x="165" y="175" width="130" height="300"/><rect x="385" y="175" width="130" height="300"/>
+    <rect x="605" y="175" width="130" height="300"/><rect x="825" y="175" width="130" height="300"/>
+  </g>
+  <g font-family="sans-serif" font-size="22" font-weight="700" fill="#244a6a" text-anchor="middle">
+    <text x="230" y="210">3 planned</text><text x="450" y="210">3 planned</text>
+    <text x="670" y="210">3 planned</text><text x="890" y="210">3 planned</text>
+  </g>
+  <g stroke="#c4413b" stroke-width="8">
+    <line x1="165" y1="475" x2="295" y2="475"/><line x1="385" y1="475" x2="515" y2="475"/>
+    <line x1="605" y1="475" x2="735" y2="475"/><line x1="825" y1="475" x2="955" y2="475"/>
+  </g>
+  <g font-family="sans-serif" font-size="18" font-weight="700" fill="#a4312d" text-anchor="middle">
+    <text x="230" y="455">0 executed</text><text x="450" y="455">0 executed</text>
+    <text x="670" y="455">0 executed</text><text x="890" y="455">0 executed</text>
+  </g>
+  <g font-family="sans-serif" font-size="18" fill="#17212b" text-anchor="middle">
+    <text x="230" y="515">Full log</text><text x="450" y="515">Last 25</text>
+    <text x="670" y="515">No log</text><text x="890" y="515">Stateless</text>
+  </g>
+  <rect x="180" y="550" width="740" height="42" rx="8" fill="#fde8e7"/>
+  <text x="550" y="578" font-family="sans-serif" font-size="20" font-weight="700" fill="#8f2d29" text-anchor="middle">Setup gate in every terminal log: ARC_API_KEY not set</text>
+</svg>

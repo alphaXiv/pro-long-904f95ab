@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="620" viewBox="0 0 1100 620" role="img" aria-labelledby="title desc">
+  <title id="title">Audit of released PRO-LONG trajectories</title>
+  <desc id="desc">The release contains 25 scorecards, trajectories, and analyzer logs, with counts of retrieval-related mentions.</desc>
+  <rect width="1100" height="620" fill="#fbfaf7"/>
+  <text x="70" y="62" font-family="sans-serif" font-size="30" font-weight="700" fill="#17212b">Released artifact audit (not fresh reproduction evidence)</text>
+  <text x="70" y="96" font-family="sans-serif" font-size="18" fill="#52606d">Sanitized Fable 5 online cohort bundled in the pinned repository</text>
+  <g>
+    <rect x="70" y="135" width="290" height="125" rx="12" fill="#e8f1ea"/>
+    <rect x="405" y="135" width="290" height="125" rx="12" fill="#e8f1ea"/>
+    <rect x="740" y="135" width="290" height="125" rx="12" fill="#e8f1ea"/>
+  </g>
+  <g font-family="sans-serif" text-anchor="middle">
+    <text x="215" y="195" font-size="42" font-weight="700" fill="#2f6d50">25</text><text x="215" y="228" font-size="18" fill="#345144">scorecards</text>
+    <text x="550" y="195" font-size="42" font-weight="700" fill="#2f6d50">25</text><text x="550" y="228" font-size="18" fill="#345144">trajectories</text>
+    <text x="885" y="195" font-size="42" font-weight="700" fill="#2f6d50">25</text><text x="885" y="228" font-size="18" fill="#345144">analyzer logs</text>
+  </g>
+  <text x="70" y="315" font-family="sans-serif" font-size="22" font-weight="700" fill="#17212b">Retrieval-related text mentions in analyzer transcripts</text>
+  <g fill="#497eac">
+    <rect x="260" y="355" width="109" height="42" rx="5"/>
+    <rect x="260" y="425" width="729" height="42" rx="5"/>
+    <rect x="260" y="495" width="743" height="42" rx="5"/>
+  </g>
+  <g font-family="sans-serif" font-size="18" fill="#17212b" text-anchor="end">
+    <text x="240" y="382">grep / regex</text><text x="240" y="452">Python</text><text x="240" y="522">logs.txt</text>
+  </g>
+  <g font-family="sans-serif" font-size="18" font-weight="700" fill="#244a6a">
+    <text x="382" y="382">481</text><text x="1002" y="452">3,210</text><text x="1016" y="522">3,271</text>
+  </g>
+  <text x="70" y="582" font-family="sans-serif" font-size="17" fill="#52606d">Official released cohort: mean score 94.7115, 179 levels, 11,156 actions. These are author artifacts, not observations from this attempt.</text>
+</svg>

@@ -1,3 +1,26 @@
+# Reproduction status: setup-blocked
+
+[![Open in molab](https://marimo.io/molab-shield.svg)](https://molab.marimo.io/github/alphaXiv/pro-long-904f95ab/blob/main/reports/pro-long-reproduction/notebook.py)
+
+This public repository contains a bounded reproduction attempt of the central claim in [PRO-LONG (arXiv:2607.20064)](https://arxiv.org/abs/2607.20064): under the same agent and action budget, a complete structured history should beat last-25 and no-log controls, while programmatic retrieval should improve score per token. We prepared `g50t`, `m0r0`, and `ls20` with 120 actions/game for full-log, last-25, no-log, and stateless conditions using GPT-5.4 Codex. All corrected OpenResearch Kubernetes jobs completed, but `ARC_API_KEY` was absent, so **zero fresh ARC episodes ran and the claims are unassessed**.
+
+The paper reports 41.2% pass@1 for full-log GPT-5.5 versus 24.0% for no-log on 25 games. This attempt observed no score rather than a contradictory number. Downscaling was three games instead of 25, 120 actions instead of 500, and GPT-5.4 instead of GPT-5.5. Compute used Kubernetes on an NVIDIA RTX PRO 6000 Blackwell cluster; this API-driven workload allocated 0 GPUs at peak, ran four CPU jobs concurrently, and took 222 seconds (0.0617 hours) wall time.
+
+Read the [illustrated report](reports/pro-long-reproduction/report.md), explore the [self-contained marimo notebook](reports/pro-long-reproduction/notebook.py), or inspect the embedded [result summary](reports/pro-long-reproduction/results.json).
+
+## Experiment log
+
+| Branch / experiment | Purpose or change | Exact run command | Assessment / outcome | Compute |
+|---|---|---|---|---|
+| `main` | Public report, notebook, and reusable harness | Not run as an experiment (publication surface) | Presentation-only | — |
+| [`orx/fresh-full-log-3-game-baseline`](https://github.com/alphaXiv/pro-long-904f95ab/tree/orx/fresh-full-log-3-game-baseline) | Frozen root; exposed the injected-script wrapper error | `bash reproduction/run.sh` | Infrastructure failure before setup; zero episodes | Kubernetes, CPU-only, 10s |
+| [`orx/corrected-kubernetes-full-log-baseline`](https://github.com/alphaXiv/pro-long-904f95ab/tree/orx/corrected-kubernetes-full-log-baseline) | Full structured log; corrected Kubernetes wrapper | `bash reproduction/run.sh` | Setup-blocked: `ARC_API_KEY` absent; zero episodes | Kubernetes, CPU-only, 68s |
+| [`orx/corrected-last-25-control`](https://github.com/alphaXiv/pro-long-904f95ab/tree/orx/corrected-last-25-control) | Expose only the last 25 action sections | `bash reproduction/run.sh` | Setup-blocked: `ARC_API_KEY` absent; zero episodes | Kubernetes, CPU-only, 68s |
+| [`orx/corrected-no-log-control`](https://github.com/alphaXiv/pro-long-904f95ab/tree/orx/corrected-no-log-control) | Inject current board; no automatic log in workspace | `bash reproduction/run.sh` | Setup-blocked: `ARC_API_KEY` absent; zero episodes | Kubernetes, CPU-only, 63s |
+| [`orx/corrected-stateless-control`](https://github.com/alphaXiv/pro-long-904f95ab/tree/orx/corrected-stateless-control) | Full log with workspace cleared between calls | `bash reproduction/run.sh` | Setup-blocked: `ARC_API_KEY` absent; zero episodes | Kubernetes, CPU-only, 52s |
+
+---
+
 # PRO-LONG: Programmatic Memory Enables Long-Horizon Reasoning
 
 PRO-LONG is a minimal memory addition for LLM agents on long-horizon tasks. Our harness appends every observation, action, and outcome verbatim to a single structured log.txt, and the agent retrieves and reasons over it programmatically (grep, Python). We use no subagents or specalized retrieval mechanisms, and use a ~30-line prompt.

@@ -9,7 +9,7 @@ spec:
       containers:
         - name: reproduction
           image: python:3.12-bookworm
-          command: ["bash", "-c", "$ORX_SCRIPT"]
+          command: ["bash", "-c", "eval \"$ORX_SCRIPT\""]
           resources:
             requests:
               cpu: "8"

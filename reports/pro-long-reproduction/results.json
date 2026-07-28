@@ -1,0 +1,75 @@
+{
+  "attemptCutoffUtc": "2026-07-28T05:49:55.314Z",
+  "campaignStartUtc": "2026-07-28T05:57:12Z",
+  "campaignEndUtc": "2026-07-28T06:00:54Z",
+  "wallSeconds": 222,
+  "compute": {
+    "backend": "kubernetes",
+    "clusterGpuModel": "NVIDIA RTX PRO 6000 Blackwell",
+    "peakConcurrentGpuCount": 0,
+    "peakConcurrentCpuJobs": 4,
+    "peakRequestedCpuCount": 32
+  },
+  "protocol": {
+    "games": ["g50t", "m0r0", "ls20"],
+    "maxActionsPerGame": 120,
+    "model": "gpt-5.4",
+    "reasoningEffort": "high",
+    "actionCap": 20,
+    "analyzerRetries": 3,
+    "gridMode": "ascii"
+  },
+  "correctedRuns": [
+    {
+      "condition": "full-log",
+      "branch": "orx/corrected-kubernetes-full-log-baseline",
+      "commit": "5f979432443fdb22c65f6a6812f588fb470fc376",
+      "durationSeconds": 68,
+      "status": "done",
+      "freshArcEpisodes": 0,
+      "gate": "ARC_API_KEY not set"
+    },
+    {
+      "condition": "last-25",
+      "branch": "orx/corrected-last-25-control",
+      "commit": "65b36b82f82249896a1fe010f301f25ea848bc7c",
+      "durationSeconds": 68,
+      "status": "done",
+      "freshArcEpisodes": 0,
+      "gate": "ARC_API_KEY not set"
+    },
+    {
+      "condition": "no-log",
+      "branch": "orx/corrected-no-log-control",
+      "commit": "70493a5b5bbfc9c637c129012ad146f8a4219014",
+      "durationSeconds": 63,
+      "status": "done",
+      "freshArcEpisodes": 0,
+      "gate": "ARC_API_KEY not set"
+    },
+    {
+      "condition": "stateless",
+      "branch": "orx/corrected-stateless-control",
+      "commit": "6df84e59942fe1fda1222328f63da3142a9c9ea0",
+      "durationSeconds": 52,
+      "status": "done",
+      "freshArcEpisodes": 0,
+      "gate": "ARC_API_KEY not set"
+    }
+  ],
+  "releasedArtifactAudit": {
+    "evidenceLabel": "released-log-audit-not-reproduction",
+    "scorecardFiles": 25,
+    "trajectoryFiles": 25,
+    "analyzerFiles": 25,
+    "meanOfficialScore": 94.7115,
+    "levelsCompleted": 179,
+    "actions": 11156,
+    "retrievalMentions": {
+      "grepOrRegex": 481,
+      "python": 3210,
+      "logsTxt": 3271
+    },
+    "scorecardSha256": "21a2eebf2ac3878aca31294e90cff2b0f81768459fb6cd3c814f5dd98a4d358e"
+  }
+}
