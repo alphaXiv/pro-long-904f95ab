@@ -1,0 +1,19 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: prolong-repro-{{ORX_RUN}}
+spec:
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: reproduction
+          image: python:3.12-bookworm
+          command: ["bash", "-c", "$ORX_SCRIPT"]
+          resources:
+            requests:
+              cpu: "8"
+              memory: 16Gi
+            limits:
+              cpu: "8"
+              memory: 16Gi

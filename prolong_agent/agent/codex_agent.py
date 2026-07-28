@@ -751,10 +751,12 @@ class CodexAgent:
                 self._session_ids.pop(path_key, None)
                 session_id = None
 
+        direct_codex = os.environ.get("PROLONG_DIRECT_CODEX", "") == "1"
+        output_path = str(sandbox / "last_message.txt") if direct_codex else "/workspace/last_message.txt"
         common_opts = [
             "--json",
             "--skip-git-repo-check",
-            "-o", "/workspace/last_message.txt",
+            "-o", output_path,
             "-m", self._model,
             "-c", f'model_reasoning_effort="{self._reasoning_effort}"',
         ]
@@ -773,46 +775,56 @@ class CodexAgent:
                 prompt,
             ]
 
-        host_codex = self._codex_home
-        # Secure by default: the agent runs on an --internal docker network
-        # (no direct internet/host/metadata) and reaches the OpenAI API only
-        # through the squid allowlist proxy. The container never talks to the
-        # game server (the host-side runner does), so an LLM-only allowlist is
-        # sufficient. Opt out with CODEX_DOCKER_NETWORK=host.
-        _net = os.environ.get("CODEX_DOCKER_NETWORK", sandbox_net.INTERNAL_NETWORK)
-        _proxy = os.environ.get("CODEX_EGRESS_PROXY",
-                                "http://rgb-openai-proxy:3128"
-                                if _net == sandbox_net.INTERNAL_NETWORK else "")
-        if _net == sandbox_net.INTERNAL_NETWORK:
-            sandbox_net.ensure_secure_network(
-                "rgb-openai-proxy", "rgb-openai-proxy", "docker/openai-proxy")
-        net_flags: list[str] = ["--network", _net]
-        if _proxy:
-            for _v in ("HTTP_PROXY", "HTTPS_PROXY", "ALL_PROXY",
-                       "http_proxy", "https_proxy", "all_proxy"):
-                net_flags += ["-e", f"{_v}={_proxy}"]
-            net_flags += ["-e", "NO_PROXY=localhost,127.0.0.1",
-                          "-e", "no_proxy=localhost,127.0.0.1"]
-
-        cmd = [
-            "docker", "run", "--rm",
-            "--user", "1000:1000",
-            *net_flags,
-            "--memory=8g", "--cpus=4",
-            "-w", "/workspace",
-            "-v", f"{os.path.realpath(sandbox)}:/workspace:rw",
-            "-v", f"{os.path.realpath(host_codex)}:/home/sandbox/.codex:rw",
-            "-e", "HOME=/home/sandbox",
-        ]
         api_key = os.environ.get("OPENAI_API_KEY", "")
         if not api_key:
             log.error("OPENAI_API_KEY not set — codex requires it for authentication")
             return None
-        cmd += ["-e", f"OPENAI_API_KEY={api_key}"]
-        cmd += [
-            self._DOCKER_IMAGE,
-            *codex_args,
-        ]
+        popen_cwd: Path | None = None
+        popen_env: dict[str, str] | None = None
+        if direct_codex:
+            # Kubernetes jobs do not have a nested Docker daemon. Run the pinned
+            # CLI directly in the pod and pass it a deliberately minimal
+            # environment: notably, ARC_API_KEY is never exposed to the model.
+            cmd = ["codex", *codex_args]
+            popen_cwd = sandbox
+            popen_env = {
+                key: value
+                for key, value in os.environ.items()
+                if key not in {"ARC_API_KEY", "ANTHROPIC_API_KEY"}
+            }
+            popen_env["OPENAI_API_KEY"] = api_key
+        else:
+            host_codex = self._codex_home
+            # Secure by default: the agent runs on an --internal docker network
+            # and reaches the OpenAI API only through the allowlist proxy.
+            _net = os.environ.get("CODEX_DOCKER_NETWORK", sandbox_net.INTERNAL_NETWORK)
+            _proxy = os.environ.get("CODEX_EGRESS_PROXY",
+                                    "http://rgb-openai-proxy:3128"
+                                    if _net == sandbox_net.INTERNAL_NETWORK else "")
+            if _net == sandbox_net.INTERNAL_NETWORK:
+                sandbox_net.ensure_secure_network(
+                    "rgb-openai-proxy", "rgb-openai-proxy", "docker/openai-proxy")
+            net_flags: list[str] = ["--network", _net]
+            if _proxy:
+                for _v in ("HTTP_PROXY", "HTTPS_PROXY", "ALL_PROXY",
+                           "http_proxy", "https_proxy", "all_proxy"):
+                    net_flags += ["-e", f"{_v}={_proxy}"]
+                net_flags += ["-e", "NO_PROXY=localhost,127.0.0.1",
+                              "-e", "no_proxy=localhost,127.0.0.1"]
+
+            cmd = [
+                "docker", "run", "--rm",
+                "--user", "1000:1000",
+                *net_flags,
+                "--memory=8g", "--cpus=4",
+                "-w", "/workspace",
+                "-v", f"{os.path.realpath(sandbox)}:/workspace:rw",
+                "-v", f"{os.path.realpath(host_codex)}:/home/sandbox/.codex:rw",
+                "-e", "HOME=/home/sandbox",
+                "-e", f"OPENAI_API_KEY={api_key}",
+                self._DOCKER_IMAGE,
+                *codex_args,
+            ]
 
         analyzer_log = log_path.parent / (log_path.stem + "_analyzer.txt")
         with open(analyzer_log, "a", encoding="utf-8") as f:
@@ -837,6 +849,8 @@ class CodexAgent:
                 stderr=subprocess.PIPE,
                 text=True,
                 bufsize=1,
+                cwd=popen_cwd,
+                env=popen_env,
             )
 
             stderr_lines: list[str] = []

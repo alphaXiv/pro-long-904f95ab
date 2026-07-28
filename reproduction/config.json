@@ -1,0 +1,12 @@
+{
+  "condition": "full-log",
+  "games": ["g50t", "m0r0", "ls20"],
+  "max_actions": 120,
+  "model": "gpt-5.4",
+  "reasoning_effort": "high",
+  "action_cap": 20,
+  "analyzer_retries": 3,
+  "grid_mode": "ascii",
+  "workspace": "persistent",
+  "log_window": null
+}
